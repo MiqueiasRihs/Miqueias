@@ -2,6 +2,14 @@ body {
     background-color:#E0DFE0!important;
 }
 
+
+
+a:hover {
+    color:white;
+    background-color:rgb(44, 170, 190);
+    text-decoration:underline;
+}
+
 #profile-wrapper{
     text-align: center;
 }
@@ -17,6 +25,14 @@ body {
     max-width: 50%;
     max-height: 50%
 }
+
+.img-projetos{
+    border-radius: 150px;
+    border-color: red;
+}
+
+.img-projetos{position:relative}
+.img-projetos:hover{top:-2px;box-shadow:0 2px 2px rgb(44, 170, 190)}
 
 .titulos {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -37,8 +53,9 @@ ul {
     list-style-type: none;
 }
 
-#projetos {
-    width: ;
+.linkProjetos {
+    border-image: 100px;
+    border-color: black;
 }
 
 .social-links ul, li{
