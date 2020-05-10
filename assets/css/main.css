@@ -13,9 +13,32 @@ body {
     margin-right: auto;
 }
 
+#django {
+    max-width: 50%;
+    max-height: 50%
+}
+
+.titulos {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: green;
+}
+
+.contet {
+    max-width: 100%;
+    max-height: auto;
+}
+.contetU {
+    max-width: 100%;
+    max-height: auto;
+}
+
 ul {
     padding: 0;
     list-style-type: none;
+}
+
+#projetos {
+    width: ;
 }
 
 .social-links ul, li{
@@ -26,4 +49,30 @@ ul {
 .social {
     width: 20px;
     height: 20px;
+}
+
+.cod {
+    background-color: #eee;
+    border-radius: 3px;
+    font-family: courier, monospace;
+    padding: 0 3px;
+}
+
+.codP {
+    background-color: #eee;
+    border-radius: 3px;
+    font-family: courier, monospace;
+    padding: 0 3px;
+}
+
+pre {
+    display:block;
+    height: 450px;
+    border-radius: 3px;
+    font-family: courier, monospace;
+    padding: 0 3px;
+}
+
+h4 {
+    text-align: center;
 }

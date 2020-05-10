@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../assets/css/main.css" rel="stylesheet" type="text/css">
+    </linlk>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Demanda de Produtos</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="https://miqueiasrihs.github.io/Miqueias/">Miquéias</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <div class="card card-body h-100">
+                    <h5 style="text-align: center;"><b>Demanda de Produtos</b></h5>
+                    <center>
+                        <img id="django" src="../assets/images/PostProjeto/django.png" alt="">
+                    </center>
+                    <hr>
+                    <p>Recentemente inicie meus estudos com Django, e para poder praticar resolvi desenvolver um pequeno
+                        projeto com essa tecnologia, e esse
+                        projeto é um controle de demanda de produtos de uma loja de roupas. O resultado é algo simples
+                        mas nos mostra o grande poder que esse
+                        framework Python pode trazer para o desenvolvimento web.
+                        <br>
+                        Decidi trazer este post e transmitir como foi feito essa aplicação para que outras pessoas que
+                        assim como eu, estao aprendendo,
+                        tenham uma ideia do que pode fazer com Django. Não irei aqui dar uma explicação detalhada de
+                        cada arquivo no projeto, pois
+                        acredito que eu não seja a melhor pessoa para fazer isso simplesmente porque estou inciando
+                        agora no universo de Djago, mas indico <a
+                            href="https://medium.com/@thais.ribeiro/introdu%C3%A7%C3%A3o-ao-django-come%C3%A7ando-um-projeto-do-zero-57a953e0614b">este
+                            artigo feito pela Thaís Ribeiro</a>,
+                        ela explica oque se trata cada arquivo gerado, e eu tambem deixarei no final do post, o link do
+                        repositorio no GitHub.
+                    </p>
+                    <hr>
+
+                    <h4 class="titulos">Começando do Começo</h4>
+
+                    <p>Para iniciar o projeto, execute o seguinte comando no terminal</p>
+                    <code class="codP">
+                        django-admin startproject Demanda
+                    </code> <br>
+                    <p>Esse comando irá criar um diretorio para o projeto com o nome de Demanda, e dentro do diretorio,
+                        terá uma serie de arquivos .py
+                        <center>
+                            <img class="contet" src="../assets/images/PostProjeto/1.png" alt="">
+                        </center>
+                    </p><br>
+
+                    <p>Agora nós iremos criar a aplicação desse projeto Demanda, e para isso, pelo terminal entre no
+                        diretorio do projeto e execute
+                        o comando abaixo</p>
+                    <code class="codP">
+                        python manage.py startapp app
+                    </code> <br>
+                    <p>Ele criou para nós um outro diretório que contem arquivos .py referente a nossa aplicação, e
+                        agora nós podemos começar a trabalhar
+                        no projeto.
+                        <center>
+                            <img class="contet" src="../assets/images/PostProjeto/2.png" alt="">
+                        </center>
+                    </p><br>
+
+                    <p>Primeiro, crie dentro do diretorio app uma pasta com o nome de templates, e dentro de templates
+                        crie um arquivo html com o nome
+                        de produtos_demanda.html.
+                        <b style="color: red;"><i>Obs: A estilização fica a sua escolha, no meu caso inseri elementos de
+                                bootstrap que é
+                                facilmente encontrado na internet, mas os arquivos de estilização devem ser salvos
+                                dentro
+                                de uma pasta com o nome de 'static' que assim como 'templates' sao nomes que o Django
+                                identifica
+                                automaticamente.</i></b> <br>
+                        O meu arquivo html ficou assim:
+                    </p>
+
+                    <div>
+                        <div class="card card-body h-100" style="overflow-y:auto">
+
+                            <code=xhtml id="cod">
+                                <pre>
+
+&lt!DOCTYPE html&gt
+{% load static %}
+{% load meus_filtros %}
+&lthtml lang="en"&gt
+
+&lthead&gt
+    &ltmeta charset="UTF-8"&gt
+    &ltmeta name="viewport" content="width=device-width, initial-scale=1.0"&gt
+    &ltlink rel="stylesheet" href="{% static 'app/css/style.css' %}"&gt
+    &ltlink rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"&gt
+    &lttitle&gtDemanda&lt/title&gt
+&lt/head&gt
+
+&ltbody&gt
+    &ltnav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt
+        &lta class="navbar-brand" href="{% url 'produtos_demanda' %}"&gtDemanda de Produtos&lt/a&gt
+        &ltbutton class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"&gt
+            &ltspan class="navbar-toggler-icon"&gt&lt/span&gt
+        &lt/button&gt
+    &lt/nav&gt
+
+    &ltbr&gt
+
+        &lt/div&gt
+    &ltdiv class="container-fluid"&gt
+
+        &ltdiv class="row"&gt
+            &ltdiv class="col-md-6"&gt
+                &ltdiv class="card card-body h-100"&gt
+                    &lth5 style="text-align:center"&gtCadastrar Produtos&lt/h5&gt
+                    &lthr&gt
+
+                    &ltform method="post""&gt
+                        {% csrf_token %}
+                        &ltdiv class=" form-group"&gt
+                        &ltlabel&gtNome: &lt/label&gt
+                        {{ form_produtos.nome|addclass:'form-control' }}
+                        &ltlabel&gtTipo: &lt/label&gt
+                        {{ form_produtos.tipo|addclass:'form-control' }}
+                &lt/div&gt
+                &ltdiv class="form-group"&gt
+                    &ltlabel&gtMarca: &lt/label&gt
+                    {{ form_produtos.marca|addclass:'form-control' }}
+                &lt/div&gt
+                &ltdiv class="form-group"&gt
+                    &ltlabel&gtTamanho: &lt/label&gt
+                    {{ form_produtos.tamanho|addclass:'form-control' }}
+                &lt/div&gt
+                &ltdiv class="form-group"&gt
+                    &ltlabel&gtQuant: &lt/label&gt
+                    {{ form_produtos.quantidade|addclass:'form-control' }}
+                &lt/div&gt
+                &ltdiv class="form-group"&gt
+                    &ltinput class="btn btn-light" type="submit" value="Salvar"&gt
+                &lt/div&gt
+                &lt/form&gt
+
+            &lt/div&gt
+        &lt/div&gt
+        &ltdiv class="col-md-6"&gt
+            &ltdiv class="card card-body h-100" style="overflow-y:auto"&gt
+                &lth5 style="text-align:center"&gtProdutos Salvos&lt/h5&gt
+                    &lthr&gt 
+                &ltdiv class="table-responsive-lg" style="overflow-x:auto;"&gt
+                    &lttable class="table"&gt
+                        &ltthead&gt
+                            &lttr&gt
+                                &ltth id='colName'scope="col"&gtNome&lt/th&gt
+                                &ltth scope="col"&gtTipo&lt/th&gt
+                                &ltth scope="col"&gtMarca&lt/th&gt
+                                &ltth scope="col"&gtTam&lt/th&gt
+                                &ltth scope="col"&gtQuant&lt/th&gt
+                                &ltth scope="col"&gtDelete&lt/th&gt
+                            &lt/tr&gt
+                        &lt/thead&gt
+                        &lttbody&gt
+                            {% for produto in produto %}
+                            &lttr&gt
+                                &ltth scope="row"&gt{{produto.nome}}&lt/th&gt
+                                &lttd&gt{{produto.get_tipo_display}}&lt/td&gt
+                                &lttd&gt{{produto.marca}}&lt/td&gt
+                                &lttd&gt{{produto.tamanho}}&lt/td&gt
+                                &lttd&gt{{produto.quantidade}}&lt/td&gt
+                                &ltform action='{{produto.id}}' method="GET"&gt
+                                {% csrf_token %}
+                                &lttd&gt
+                                &ltbutton class="btn btn-danger" type="submit" name="delete_produto" value="{{produto.id}}"&gtX&lt/button&gt
+                                &lt/td&gt
+                                &lt/form&gt
+                            &lt/tr&gt
+                            {% endfor %}
+                        &lt/tbody&gt
+                    &lt/table&gt
+                &lt/div&gt
+            &lt/div&gt
+        &lt/div&gt
+    &lt/div&gt
+    &lt/div&gt
+&lt/body&gt
+
+&lt/html&gt
+                            </pre>
+                    </code>
+                    <p>Perceba que no arquivo html, possui alguns diferentes comandos como por exemplo
+                        <b>{{produto.nome}}</b>, e isso são expressões Django
+                        usadas para invocar codigo python diretamente no html.</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <br>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <div class="card card-body h-100">
+                    <h4 class="titulos" style="color: red;">Ligando os Pontos</h4>
+                    <p>Dentro do diretorio 'app' crie um novo arquivo com o nome de ulr.py e insira o seguinte codigo
+                        nele e
+                        salve</p>
+                    <center>
+                        <img class="contet" src="../assets/images/PostProjeto/3.png" alt="">
+                    </center>
+
+                    <br>
+                    <div>
+                        <div class="card card-body h-100" style="height:100px">
+                            <code=python id="cod" style="height: 150px;">
+                                <pre>
+    from django.contrib import admin
+    from django.urls import path
+    from .views import *
+    
+    urlpatterns = [
+        path('produtos_demanda/', produtos_demanda, name='produtos_demanda'),
+        path('produtos_demanda/<int:id>', delete_produto, name='delete_produto'),
+    ]
+                                    </pre>
+                                </code>
+                        </div>
+                    </div>
+                    <p>Oque fizemos aqui foi informar para o Django as rotas para serem redirecionada quando houver uma
+                        requisição
+                        no front pelo usuario, que aciona as funções que definimos no views.py do app.
+                    </p>
+                    <br>
+                    <p>Dentro do arquivo urls.py <b>do diretorio Demanda</b>, insira o seguinte codigo e salve:</p>
+                    <div>
+                        <div class="card card-body h-100" style="height:100px">
+                            <code=python id="codUrl" style="height: 130px;">
+                                <pre>
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('app.urls'))
+    ]
+                                    
+                                </pre>
+                                </code>
+                        </div>
+                    </div>
+                    <br>
+                    <p>Agora iremos trabalhar no arquivo views.py que é onde a magia acontece, nele definimos oque cada
+                        requisição vinda do
+                        front irá fazer, segue o codigo.</p>
+                    <div>
+                        <div class="card card-body h-100" style="height:100px">
+                            <code=python id="codUrl">
+                                <pre>
+from django.shortcuts import render, redirect
+from .forms import ProdutosForm
+from .entidades.produtos import Produtos
+from .services import produto_service
+
+
+def delete_produto(request, id):
+if(request.GET.get('delete_produto')):
+    produto_id = produto_service.listar_produtos_id(id)
+    produto_service.remover_produto(produto_id)
+    return redirect('produtos_demanda')
+
+### Metodo para renderizar na tela ###
+def produtos_demanda(request):
+if request.method == "POST":
+    form_produtos = ProdutosForm(request.POST)
+    if form_produtos.is_valid():
+        nome = form_produtos.cleaned_data["nome"]
+        marca = form_produtos.cleaned_data["marca"]
+        tamanho = form_produtos.cleaned_data["tamanho"]
+        quantidade = form_produtos.cleaned_data["quantidade"]
+        tipo = form_produtos.cleaned_data["tipo"]
+
+        produtos_novos = Produtos(nome=nome, marca=marca, tamanho=tamanho, quantidade=quantidade, tipo=tipo)
+        produto_service.cadastrar_produto(produtos_novos)
+
+        return redirect('produtos_demanda')
+else:
+    form_produtos = ProdutosForm()
+
+form_produtos = ProdutosForm()
+
+produto = produto_service.listar_produtos()
+
+return render(request, 'produtos_demanda.html', {"form_produtos": form_produtos, "produto": produto})
+                                    
+                                </pre>
+                                </code>
+                        </div>
+                    </div>
+                    <p>Nós definimos nesse arquivo dois modulos, um cadastra o produto no banco e os lista na tela
+                        para o usuario, e o outro deleta do banco caso seja solicitado.
+                    </p>
+                    <br>
+                    <p>Para deixar mais claro, quando tem a requisiçao do usuario no front, o django entao verifica
+                        no urls.py da aplicação qual rota esta chamando, apartir disso ele vai até o arquivo views.py
+                        executando a função
+                        que foi chamada renderizando o resultado na tela.
+                    </p>
+
+                    <p>Uma ultima coisa antes de entrarmos no funcionamento do banco de dados é criarmos uma camada de
+                        services, para dividirmos melhor
+                        as funcionalidades dos modulos na views.py. Para isso crie uma nova pasta dentro de app com o
+                        nome de services e dentro dela crie
+                        um novo arquivo com o nome de produtos_service.py.
+                    </p>
+                    <center>
+                        <img class="contet" src="../assets/images/PostProjeto/4.png" alt="">
+                    </center>
+                    <p>E insira o seguinte codigo no novo arquivo:</p>
+                    <div>
+                        <div class="card card-body h-100" style="height: 80px;">
+                            <code=python id="codUrl">
+                                <pre>
+from ..models import Produtos
+
+def cadastrar_produto(produtos):
+    Produtos.objects.create(nome=produtos.nome, marca=produtos.marca, tamanho=produtos.tamanho, quantidade=produtos.quantidade, tipo=produtos.tipo)
+
+def listar_produtos():
+    return Produtos.objects.all()
+
+def listar_produtos_id(id):
+    return Produtos.objects.get(id=id)
+
+def remover_produto(produto_id):
+    produto_id.delete()
+                                    
+                                </pre>
+                                </code>
+                        </div>
+                    </div>
+                    <p>Oque fizemos aqui foi transformar o formulario que o usuario preencheu em objeto, listar cada
+                        produto
+                        com seus respectivos ID's e uma função para deletarmos do banco apartir do ID do produto. E nós
+                        chamamos todas essas funçoes
+                        no arquivo views.py.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <div class="card card-body h-100">
+                    <h4 class="titulos" style="color: red;">Banco de Dados</h4>
+                    <p>Para fazermos o banco de dados funcionar iremos utilizar três arquivos, são eles o models.py,
+                        settings.py produtos.py. Para
+                        o ultimo criamos uma diretorio dentro de app e demos o nome de entidades e dentro de entidades
+                        salvamos o arquivo produtos.py
+                        irei listar o codigo dos três aqui:
+                    </p>
+                    <p>models.py</p>
+                    <div>
+                        <div class="card card-body" style="height: 350px;">
+                            <code=python id="codUrl">
+                                <pre>
+from django.db import models
+
+# Create your models here.
+class Produtos(models.Model):
+    TIPO_CHOICES = [
+        ("C", "Calçados"),
+        ("V", "Vestuario"),
+        ("A", "Acessorios"),
+    ]
+    nome = models.CharField(max_length=70, null=False, blank=False)
+    marca = models.CharField(max_length=30, null=False, blank=False)
+    tamanho = models.CharField(max_length=2, null=False, blank=False)
+    quantidade = models.IntegerField(null=False, blank=False)
+    tipo = models.CharField(max_length=1, choices=TIPO_CHOICES, null=False, blank=False)
+                                    
+                                </pre>
+                                </code>
+                        </div>
+                    </div>
+                    <p>Com models o Django cria automaticamente os campos listados junto com cada configuração, ou seja
+                        nao precimos nos preocupar com
+                        codigo SQL, o Django já faz isso por nós, o unico criterio é ja termos o banco criado.
+                    </p>
+                    <p>produtos.py</p>
+                    <div>
+                        <div class="card card-body" style="height: auto;">
+                            <code=python id="codUrl">
+                                <pre>
+class Produtos():
+def __init__(self, nome, marca, tamanho, quantidade, tipo):
+    self.__nome = nome
+    self.__marca = marca
+    self.__tamanho = tamanho
+    self.__quantidade = quantidade
+    self.__tipo = tipo
+
+@property
+def nome(self):
+    return self.__nome
+@nome.setter
+def nome(self, nome):
+    self.__nome = nome
+
+@property
+def marca(self):
+    return self.__marca
+@marca.setter
+def marca(self, marca):
+    self.__marca = marca
+
+
+@property
+def tamanho(self):
+    return self.__tamanho
+@tamanho.setter
+def tamanho(self, tamanho):
+    self.__tamanho = tamanho
+
+
+@property
+def quantidade(self):
+    return self.__quantidade
+@quantidade.setter
+def quantidade(self, quantidade):
+    self.__quantidade = quantidade
+
+
+@property
+def tipo(self):
+    return self.__tipo
+@tipo.setter
+def tipo(self, tipo):
+    self.__tipo = tipo                                
+                                    
+                                </pre>
+                                </code>
+                        </div>
+                    </div>
+                    <p>
+                        O settings.py é um arquivo pré criado pelo Django, nele está definido alguns criterios para o
+                        projeto funcionar, a maioria deles
+                        fica por conta do framework configurar, mas alguns especificos depende de nossas mudanças, por
+                        exemplo 'INSTALLED_APPS' e 'DATABASES',
+                        no INSTALLED_APPS fica listado as aplicações do nosso projeto, entao cabe a nós a adicionar o
+                        nome de 'app' na lista do INSTALLED_APPS,
+                        lembrando que 'app' é o nome que damos a nossa aplicação, entao fica dessa forma:
+                    </p>
+                    <div>
+                        <div class="card card-body" style="height: 230px;">
+                            <code=python id="codUrl">
+                                <pre>
+INSTALLED_APPS = [
+'django.contrib.admin',
+'django.contrib.auth',
+'django.contrib.contenttypes',
+'django.contrib.sessions',
+'django.contrib.messages',
+'django.contrib.staticfiles',
+'app',
+]
+                                </pre>
+                                </code>
+                        </div>
+                    </div>
+                    <p>
+                        Agora no DATABASES deixamos configurado e definido o banco de dados a tabela e os acessos para
+                        que seja salvo e acessado por nossa aplicação,
+                        fica dessa forma:
+                    </p>
+                    <div>
+                        <div class="card card-body" style="height: 280px;">
+                            <code=python id="codUrl">
+                                <pre>
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'produtos',
+        'USER': ' ',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+
+    }
+}
+                                </pre>
+                                </code>
+                        </div>
+                    </div><br>
+                    <p>Com isso definido iremos executar os seguintes comandos no terminal:</p>
+                    <code class="codP">
+                        python manage.py makemigrations app
+                    </code><br>
+                    <code class="codP">
+                        python manage.py migrate
+                    </code> <br>
+                   <p>makemigrations é responsável pela criação de novas migrações com base nas alterações feitas nos seus modelos.</p>
+                   <p>migrate aplica todas as migrações criadas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <div class="card card-body h-100">
+                    <h4 class="titulos" style="color: red;">Finalmentes</h4>
+
+                    <p>Com isso tudo feito podemos ver funcionar e para isso usamos o comando:</p>
+                    <code class="codP">
+                        python manage.py runserver
+                    </code> <br>
+                    <p>Este comando irá rodar o servidor do Django usadando o localhost padrão da sua maquina, acessando 
+                        você irá parar em uma tela com error 404, mas não se preocupe, no momento de desenvolvimento da aplicação
+                        definimos a rota locallhost/produtos_demanda, então basta apenas acessar esse endereço que você verá a aplicação
+                        rodando
+                    </p>
+                    <center>
+                        <img class="contetU" src="../assets/images/PostProjeto/5.png" style="display: flex;">
+                    </center>
+
+                    <br>
+                    <p>Essa foi um post para dar uma breve explicação e demonstração do projeto e quão poderoso é o Django. Qualquer duvida ou
+                        sugestão ficarei feliz de responder no email, e deixarei aqui também o link do <a href="https://github.com/MiqueiasRihs/ContabilizarDemanda">
+                             repositório no Github</a> para consultas. </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
